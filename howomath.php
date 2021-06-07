@@ -6,10 +6,10 @@
 <head>
 <meta charset="utf-8">
 <title>myapp-算数</title>
-<link rel="stylesheet" href="./stylemaincontents.css">
+<link rel="stylesheet" href="./css/stylemaincontents.css">
 </head>
-<script src="./jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="./notedrawing.js"></script>
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/notedrawing.js"></script>
 
 <body>
 <?php include './header.php' ?>

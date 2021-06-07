@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <title>myapp-マイホーム</title>
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@ Welcome <?php echo $_POST["uid"]; ?><br>
 Your password is: <?php echo $_POST["pass"]; ?><br>
 -->
 
-<div id="right"><a href="./pagelogin.php">ログアウト</a></div>
+<div id="right"><a href="./index.php">ログアウト</a></div>
 <div id="center">
 <h1>マイホーム</h1>
 <a href="./pagetextbookchoice.php">教科書とノート</a><br><br>

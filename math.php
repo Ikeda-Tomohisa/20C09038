@@ -8,23 +8,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>myapp-算数</title>
-<link rel="stylesheet" href="./stylemaincontents.css">
+<link rel="stylesheet" href="./css/stylemaincontents.css">
 </head>
 
-<script src="./jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="./notedrawing.js"></script>
-<script>
-
-$(document).ready(function(){
-  $("#nextpage").click(function(){
-    $("#textbook").children("img").attr("src", "./tbmath2.png");
-  });
-  $("#previouspage").click(function(){
-    $("#textbook").children("img").attr("src", "./tbmath1.png");
-  });
-});
-
-</script>
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/notedrawing.js"></script>
+<script type="text/javascript" src="./js/textbookpagechange.js"></script>
 
 <body>
 <?php include './header.php' ?>
@@ -33,10 +22,13 @@ $(document).ready(function(){
 <div id="box">
     <div id="textside">textbook<br>
         <div id="textbook">
-            <img src="./tbmath1.png">
+            <img>
         </div><br>
+        <button id="firstpage">最初へ</button>
         <button id="previouspage">前ページ</button>
+        <p id="pagenumber"></p>
         <button id="nextpage">次ページ</button>
+        <button id="lastpage">最後へ</button>
     </div>
     <div id="noteside">note</button>
         <div id="note">
