@@ -20,7 +20,8 @@
 <button class="subject" onclick="location.href='./math.php'">算数</button><br><br>
 <span class="rightspace"><button class="subject">理科</button></span>
 <button class="subject">社会</button><br><br>
-<button class="subject">英語</button>
+<span class="rightspace"><button class="subject">英語</button></span>
+<button class="subject">何か</button><br><br>
 
 <br><br>※現在は算数のみ
 

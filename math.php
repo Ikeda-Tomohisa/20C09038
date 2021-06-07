@@ -24,18 +24,22 @@
         <div id="textbook">
             <img>
         </div><br>
-        <button id="firstpage">最初へ</button>
-        <button id="previouspage">前ページ</button>
-        <p id="pagenumber"></p>
-        <button id="nextpage">次ページ</button>
-        <button id="lastpage">最後へ</button>
+        <div id="center">
+            <button id="firstpage">最初へ</button>
+            <button id="previouspage">前ページ</button>
+            <p id="pagenumber"></p>
+            <button id="nextpage">次ページ</button>
+            <button id="lastpage">最後へ</button>
+        </div>
     </div>
     <div id="noteside">note</button>
         <div id="note">
              <canvas id="canvas"></canvas>
-        </div>
+        </div><br>
+        <div id="center">
         <input type="button" id="undo" name="undo" value="undo">
-        <input type="button" id="redo" name="redo" value="redo"><br>
+        <input type="button" id="redo" name="redo" value="redo">
+        </div>
         
     </div>
 
