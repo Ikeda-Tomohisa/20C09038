@@ -1,0 +1,4 @@
+dbname:userlist
+table:users
+user:hoge
+password:hogehoge
