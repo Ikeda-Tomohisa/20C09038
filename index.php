@@ -12,13 +12,13 @@
 
 <body>
 <?php include './header.php' ?>
-<div id="right"><a href="pagenewaccount.php">新しいアカウント作成</a></div>
+<div id="right"><a href="pagenewaccount.php">アカウント新規登録はこちら</a></div>
 <div id="center">
 	<h1>ログイン</h1>
 	<form action="./pagemyhome.php" method="post">
-		<label for="uid">&thinsp;&emsp;UserID:</label>
-		<input type="id" name="uid" placeholder="UserID"><br>
-		<label for="pass">Password:</label>
+		<label for="username">Username:</label>
+		<input type="id" name="username" placeholder="Username"><br>
+		<label for="pass">&nbsp;Password:</label>
 		<input type="password" name="pass" placeholder="Password"><br><br>
 		<input type="submit" value="ログイン">
 	</form>
