@@ -3,17 +3,17 @@
 <?php
 
 $dsn = "mysql:host=localhost; dbname=userlist; charset=utf8";
-$user = "hoge";
-$password = "hogehoge";
+$dbuser = "hoge";
+$dbpass = "hogehoge";
 
 $errorMessage = "";
 
 if(isset($_POST["signup"])) {
 	if (empty($_POST["username"])) {
-        $errorMessage = 'ユーザーIDが未入力です。';
-    } else if (empty($_POST["pass"])) {
+        $errorMessage = 'ユーザーネームが未入力です。';
+    } else if (empty($_POST["userpass"])) {
         $errorMessage = 'パスワードが未入力です。';
-    } else if (empty($_POST["pass2"])) {
+    } else if (empty($_POST["userpass2"])) {
         $errorMessage = 'パスワード(確認用)が未入力です。';
     }
     
@@ -25,7 +25,7 @@ if(isset($_POST["signup"])) {
 
         try{
 
-        $dbh = new PDO($dsn, $user, $password);
+        $dbh = new PDO($dsn, $dbuser, $dbpass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //$pdh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         
@@ -34,7 +34,6 @@ if(isset($_POST["signup"])) {
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);
         $stmt->bindValue(':userpass', $userpass_hash, PDO::PARAM_STR);
         
-        //$stmt->execute(array(':username' => $_POST['username'],':password' => password_hash($_POST['pass'], PASSWORD_DEFAULT)));
         $stmt->execute();
         
         header("Location: ./pagemyhome.php");  // メイン画面へ遷移
@@ -44,7 +43,7 @@ if(isset($_POST["signup"])) {
             //echo $e->getMessage();
             die();
         }
-    }else if($_POST["userpass"] != $_POST["userpass2"]) {
+    }else if(!empty($_POST["userpass2"]) && $_POST["userpass"] != $_POST["userpass2"]) {
         $errorMessage = 'パスワードに誤りがあります。';
     }
 }
@@ -63,17 +62,17 @@ if(isset($_POST["signup"])) {
 <body>
 <?php include './header.php' ?>
 
-<div id="center">
+<div class="center">
 	<h1>アカウント新規登録</h1>
 	<div class="red"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
 	<form action="" method="post">
 	    <label for="username">&ensp;&emsp;&emsp;&emsp;&nbsp;Username:</label>
-		<input type="text" id="username" name="username" placeholder="ユーザー名を入力"><br>
+		<input type="text" class="textbox1" name="username" placeholder="ユーザー名を入力"><br>
 		<label for="pass">&ensp;&emsp;&emsp;&emsp;&nbsp;&nbsp;Password:</label>
-		<input type="password" id="userpass" name="userpass" placeholder="パスワードを入力"><br>
+		<input type="password" class="textbox2" name="userpass" placeholder="パスワードを入力"><br>
 		<label for="pass">Confirm Password:</label>
-		<input type="password" id="userpass2" name="userpass2" placeholder="パスワードを入力(確認用)"><br><br>
-		<input type="submit" id="signup" name="signup" value="新規登録">
+		<input type="password" class="textbox2" name="userpass2" placeholder="パスワードを入力(確認用)"><br><br>
+		<input type="submit" class="registration" name="signup" value="新規登録">
 	</form>
 </div>
 <?php include './footer.php' ?>

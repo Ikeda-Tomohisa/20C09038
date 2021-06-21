@@ -1,5 +1,9 @@
 <!-- pageclassjoinedconfirm -->
 
+<?php
+session_start();
+?>
+
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,11 +17,10 @@
 <body>
 <?php include './header.php' ?>
 
-<div id="center">
+<div class="center">
 	<h1>クラス確認</h1>
 	ClassID
 	<?php
-	session_start();
 	echo $_SESSION['classid'];
 	?><br>
 	に参加してます。 

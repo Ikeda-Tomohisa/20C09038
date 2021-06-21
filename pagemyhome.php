@@ -18,8 +18,8 @@ Welcome <?php echo $_POST["uid"]; ?><br>
 Your password is: <?php echo $_POST["pass"]; ?><br>
 -->
 
-<div id="right"><a href="./index.php">ログアウト</a></div>
-<div id="center">
+<div class="right"><a href="./index.php">ログアウト</a></div>
+<div class="center">
 <h1>マイホーム</h1>
 <a href="./pagetextbookchoice.php">教科書とノート</a><br><br>
 <a href="./pagehomework.php">宿題</a><br><br>

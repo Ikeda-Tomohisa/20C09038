@@ -13,7 +13,7 @@
 <body>
 <?php include './header.php' ?>
 
-<div id="center">
+<div class="center">
 ClassID <?php echo $_POST["cid"]; ?> <br>
 に参加しました！<br>
 <?php 

@@ -13,7 +13,7 @@
 <body>
 <?php include './header.php' ?>
 
-<div id="center">
+<div class="center">
 	<h1>クラス参加</h1>
 	<form action="./pageclassjoined.php" method="post">
 		<label for="cid">ClassID:</label>

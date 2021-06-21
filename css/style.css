@@ -13,10 +13,10 @@
 	margin-right:5%;
 	bottom:0px;
 }
-#right{
+.right{
 	text-align:right;
 }
-#center{
+.center{
 	text-align:center;
 }
 .subject{
@@ -29,4 +29,20 @@
 }
 .red{
 	color:#ff0000;
+}
+.textbox1{
+	width:200px;
+	height:20px;
+}
+.textbox2{
+	width:200px;
+	height:20px;
+	margin-top:10px;
+}
+#login{
+	width:150px;
+	margin-top:20px;
+}
+.registration{
+	width:150px;
 }

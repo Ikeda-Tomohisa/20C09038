@@ -12,16 +12,16 @@
 
 <body>
 <?php include './header.php' ?>
-<div id="right"><a href="pagenewaccount.php">アカウント新規登録はこちら</a></div>
-<div id="center">
+<div class="center">
 	<h1>ログイン</h1>
 	<form action="./pagemyhome.php" method="post">
 		<label for="username">Username:</label>
-		<input type="id" name="username" placeholder="Username"><br>
+		<input type="text" class="textbox1" name="username" placeholder="Username"><br>
 		<label for="pass">&nbsp;Password:</label>
-		<input type="password" name="pass" placeholder="Password"><br><br>
-		<input type="submit" value="ログイン">
+		<input type="password" class="textbox2" name="pass" placeholder="Password"><br>
+		<input type="submit" id="login" value="ログイン">
 	</form>
+	<br><button class="registration"onclick="location.href='./pagenewaccount.php'">アカウント新規登録<br>初めての方はこちら</button>
 </div>
 <?php include './footer.php' ?>
 </body>

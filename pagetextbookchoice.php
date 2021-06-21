@@ -13,7 +13,7 @@
 <body>
 <?php include './header.php' ?>
 
-<div id="center">
+<div class="center">
 <h1>どの教科書？</h1>
 
 <span class="rightspace"><button class="subject">国語</button></span>
