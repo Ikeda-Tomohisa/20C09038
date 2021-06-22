@@ -1,0 +1,6 @@
+userid,usertype,username,password
+
+1,t,abcde,aaaaaaaa
+2,s,aiuro,eeeeeeee
+3,t,kakikukeko,kkkkkkkk
+4,s,uuuuu,uuuuuuuu

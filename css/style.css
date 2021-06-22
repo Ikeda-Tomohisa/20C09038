@@ -41,8 +41,22 @@
 }
 #login{
 	width:150px;
+	height:30px;
+	font-size:16px;
 	margin-top:20px;
 }
 .registration{
-	width:150px;
+	width:200px;
+	font-size:16px;
+}
+.margintop20{
+	margin-top:10px;
+}
+span{
+	display:block;
+	font-size:20px;
+}
+.bigbold{
+	font-size:24px;
+	font-weight:bold;
 }

@@ -1,0 +1,3 @@
+userid,username,usertype,password,classid,studentid
+
+ユーザーID,ユーザー名,ユーザータイプ（教師or生徒）,パスワード,クラスID,学籍番号
