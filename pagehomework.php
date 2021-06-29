@@ -1,4 +1,4 @@
-<!-- pagehomework -->
+<!-- page home work -->
 
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>

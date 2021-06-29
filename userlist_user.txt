@@ -4,3 +4,5 @@ userid,usertype,username,password
 2,s,aiuro,eeeeeeee
 3,t,kakikukeko,kkkkkkkk
 4,s,uuuuu,uuuuuuuu
+6,s,sssss,ssssssss
+7,t,ttttt,tttttttt

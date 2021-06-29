@@ -1,0 +1,11 @@
+$dsn pdo接続のデータソース名(data source name = dsn)
+$dbuser dbまたはtableのユーザー名
+$dbpass dbまたはtableのユーザー名に対するパスワード
+
+$errorMessage エラーメッセージ
+
+$userid postされたuseridを代入
+$userpass postされたuserpassを代入
+
+$dbh データベースハンドル(database handle)
+$stmt ステイトメント

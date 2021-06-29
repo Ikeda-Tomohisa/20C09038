@@ -1,4 +1,4 @@
-<!-- page new account confirm -->
+<!-- make account pagenewaccount -->
 
 <?php
 session_start();
@@ -50,10 +50,9 @@ if(isset($_POST["newaccountconfirmed"])) {
         
         $_SESSION["userid"] = $dbh->lastInsertId();
         
-        header("Location: ./pagenewaccountcompleted.php");
+        header("Location: ./pagenewaccount3.php");
         exit();
         
-        $dbh = null;
         }catch(Exception $e){
             $errorMessage = 'データベースエラー';
             //echo $e->getMessage();
@@ -66,21 +65,21 @@ if(isset($_POST["newaccountconfirmed"])) {
 }
 ?>
 
-<?php include './globalcommon.php' ?>
+<?php include '../globalcommon.php' ?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
 <meta charset="utf-8">
 <title>myapp-アカウント新規登録</title>
-<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-<?php include './header.php' ?>
+<?php include '../header.php' ?>
 
 <div class="center">
-	<h1>アカウント新規登録-確認<span>Confirm new account registration</span></h1>
+	<h1>アカウント新規登録-確認<span>Confirm nre account registration</span></h1>
 		<div>こちらの情報で間違いありませんか。<br>
 		     Is this information correct?
 		</div><br>
@@ -88,11 +87,11 @@ if(isset($_POST["newaccountconfirmed"])) {
 		<?php echo "Username:",$_SESSION["username"] ?><br>
 		<?php echo "Password:",$_SESSION["userpass"] ?><br><br>
 	<form action="" method="post">
-		<button type="submit" class="registration" name="back">戻る<br>Back to previous page</button>
-		<button type="submit" class="registration" name="newaccountconfirmed">登録！<br>Register this information!</button>
+		<input type="submit" class="registration" name="back" value="戻る">
+		<input type="submit" class="registration" name="newaccountconfirmed" value="登録！">
 	</form>
 </div>
-<?php include './footer.php' ?>
+<?php include '../footer.php' ?>
 </body>
 
 </html>

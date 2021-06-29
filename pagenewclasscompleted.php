@@ -1,3 +1,5 @@
+<!-- page new class completed -->
+
 <?php
 session_start();
 ?>

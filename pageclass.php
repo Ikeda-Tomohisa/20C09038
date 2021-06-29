@@ -1,4 +1,4 @@
-<!--pageclass -->
+<!--page class -->
 
 <?php
 session_start();

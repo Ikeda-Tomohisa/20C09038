@@ -1,4 +1,4 @@
-<!-- pageyouraccount -->
+<!-- page your account -->
 <?php
 session_start();
 

@@ -1,4 +1,4 @@
-<!-- pageclassjoined -->
+<!-- page class joined -->
 
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>

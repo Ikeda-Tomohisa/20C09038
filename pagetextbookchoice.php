@@ -1,4 +1,4 @@
-<!-- pagetextbookchoice -->
+<!-- page textbook choice -->
 
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>

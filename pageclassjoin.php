@@ -1,8 +1,8 @@
-<!-- pageclassjoin -->
+<!-- page class join -->
 <?php
 session_start();
 
-$dsn = "mysql:host=localhost; dbname=userlist; charset=utf8";
+$dsn = "mysql:host=localhost; dbname=userlist; charset=utf8mb4";
 $dbuser = "hoge";
 $dbpass = "hogehoge";
 
@@ -42,24 +42,21 @@ if(isset($_POST["classjoinconfirm"])) {
             $dbh = new PDO($dsn, $dbuser, $dbpass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $query = $dbh->prepare('SELECT * FROM userlist.class WHERE classid = :classid limit 1');
+            $query = $dbh->prepare('SELECT COUNT(*) FROM class WHERE classid = :classid LIMIT 1');
             $query->bindValue(':classid', $classid, PDO::PARAM_STR);
             $query->execute();
             
-            $result = $query->fetch(PDO::FETCH_ASSOC);
-            if ($result > 0) {
+            $count = (int)$query->fetchColumn();
+            if ($count > 0) {
                 $_SESSION["classid"] = $_POST["classid"];
                 $_SESSION["studentid"] = $_POST["studentid"];
                 header("Location: ./pageclassjoinconfirm.php");
                 exit();
                 
-                $dbh = null;
             } else {
-                
                 $errorMessage = "そのClassIDは存在しません。";
                 $errorMessageEnglish = "The ClassID does not exist.";
             }
-            
         } catch (PDOException $e) {
             $errorMessage = "データベースエラー";
             //$e->getMessage();

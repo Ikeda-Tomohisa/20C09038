@@ -1,4 +1,4 @@
-<!-- participate class pageclassjoinconfirm -->
+<!-- page class join confirm -->
 
 <?php
 session_start();

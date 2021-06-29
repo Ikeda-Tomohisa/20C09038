@@ -1,4 +1,4 @@
-<!-- make account pagenewaccount -->
+<!-- page new class confirm -->
 
 <?php
 session_start();

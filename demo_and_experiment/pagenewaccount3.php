@@ -1,5 +1,3 @@
-<!-- page new account completed -->
-
 <?php
 session_start();
 
@@ -10,18 +8,18 @@ if ($_SESSION["usertype"] == "t") {
 }
 ?>
 
-<?php include './globalcommon.php' ?>
+<?php include '../globalcommon.php' ?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
 <meta charset="utf-8">
 <title>myapp-アカウント新規登録完了</title>
-<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-<?php include './header.php' ?>
+<?php include '../header.php' ?>
 
 <div class="center">
 	<h1>アカウント新規登録-完了<span>New account registration completed</span></h1>
@@ -37,9 +35,9 @@ if ($_SESSION["usertype"] == "t") {
 	<?php echo "Usertype:",$realusertype ?><br>
 	<?php echo "Username:",$_SESSION["username"] ?><br>
 	<div class="bigbold"><?php echo "Password:",$_SESSION["userpass"] ?></div><br><br>
-	<button class="registration" onclick="location.href='./pagemyhome.php'">マイホームへ<br>to myhome</button>
+	<button class="registration" onclick="location.href='../pagemyhome.php'">マイホームへ<br>to myhome</button>
 </div>
-<?php include './footer.php' ?>
+<?php include '../footer.php' ?>
 </body>
 
 </html>

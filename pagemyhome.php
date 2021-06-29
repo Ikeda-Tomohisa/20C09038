@@ -1,4 +1,4 @@
-<!-- home pagemyhome -->
+<!-- home page myhome -->
 
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>

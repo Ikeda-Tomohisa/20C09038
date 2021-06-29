@@ -1,4 +1,4 @@
-<!-- index page login -->
+<!-- index pagelogin -->
 <?php
 session_start();
 
@@ -7,11 +7,9 @@ $dbuser = "hoge";
 $dbpass = "hogehoge";
 
 $errorMessage = "";
-$errorMessageEnglish = "";
 if(isset($_POST["login"])) {
 	if (empty($_POST["userid"]) || empty($_POST["userpass"])) {
-        $errorMessage = "ユーザーIDまたはパスワードが未入力です。";
-        $errorMessageEnglish = "UserID or password is not entered.";
+        $errorMessage = 'ユーザーIDまたはパスワードが未入力です。';
     }
     if (!empty($_POST["userid"]) && !empty($_POST["userpass"])) {
         $userid = $_POST["userid"];
@@ -28,48 +26,52 @@ if(isset($_POST["login"])) {
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if (password_verify($userpass, $row['password'])) {
                     session_regenerate_id(true);
-                    $_SESSION["userID"] = $row['userid'];
-                    $_SESSION["userNAME"] = $row['username'];
-                    $_SESSION["userTYPE"] = $row['usertype'];
-                    $_SESSION["passWORD"] = $_POST['userpass'];
-                    $_SESSION["classID"] = $row['classid'];
-                    $_SESSION["studentID"] = $row['studentid'];
-                    
-                    header("Location: ./pagemyhome.php");
-                    exit();
+
+                    // 入力したIDのユーザー名を取得
+                    $id = $row['userid'];
+                    $sql = "SELECT * FROM users WHERE userid = $id";  //入力したIDからユーザー名を取得
+                    $stmt = $dbh->query($sql);
+                    foreach ($stmt as $row) {
+                        $_SESSION["userNAME"] = $row['username'];
+                        $_SESSION["userTYPE"] = $row['usertype'];
+                    }
+                    header("Location: ./pageloginsuccess.php");  // メイン画面へ遷移
+                    exit();  // 処理終了
                 } else {
+                    // 認証失敗
                     $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
                 }
             } else {
+                // 4. 認証成功なら、セッションIDを新規に発行する
+                // 該当データなし
                 $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
             }
-            $dbh = null;
         } catch (PDOException $e) {
             $errorMessage = 'データベースエラー';
             //$errorMessage = $sql;
-            //$e->getMessage();
-            //echo $e->getMessage();
+            $e->getMessage();
+            echo $e->getMessage();
         }
+        $dbh = null;
     }
 }
 ?>
 
-<?php include './globalcommon.php' ?>
+<?php include '../globalcommon.php' ?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
 <meta charset="utf-8">
 <title>myapp-ログインページ</title>
-<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-<?php include './header.php' ?>
+<?php include '../header.php' ?>
 <div class="center">
 	<h1>ログイン<span>login</span></h1>
 	<div class="red"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
-	<div class="red"><?php echo htmlspecialchars($errorMessageEnglish, ENT_QUOTES); ?></div>
 	<form action="" method="post">
 		<label for="userid">&emsp;&nbsp;&thinsp;UserID:</label>
 		<input type="text" class="textbox1" name="userid" placeholder="UserID"><br>
@@ -80,7 +82,7 @@ if(isset($_POST["login"])) {
 	<br><button class="registration" onclick="location.href='./pagenewaccount.php'">アカウント新規登録<br>初めての方はこちら<br>New account registration</button>
 	
 </div>
-<?php include './footer.php' ?>
+<?php include '../footer.php' ?>
 </body>
 
 </html>
