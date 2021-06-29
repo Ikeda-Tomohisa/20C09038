@@ -14,10 +14,10 @@
 <?php include './header.php' ?>
 
 <div class="center">
-<h1>ユーザーアカウント設定</h1>
+<h1>ユーザーアカウント設定<span>user account settings</span></h1>
 <a href="./pageyouraccount.php">あなたのユーザーアカウント</a><br><br>
 
-<a>クラス作成/参加/確認</a><br><br>
+<a href="./pageclass.php">クラス作成/参加/確認</a><br><br>
 
 <a>ヘルプ</a>
 

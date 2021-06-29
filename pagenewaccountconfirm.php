@@ -80,7 +80,7 @@ if(isset($_POST["newaccountconfirmed"])) {
 <?php include './header.php' ?>
 
 <div class="center">
-	<h1>アカウント新規登録-確認<span>Confirm nre account registration</span></h1>
+	<h1>アカウント新規登録-確認<span>Confirm new account registration</span></h1>
 		<div>こちらの情報で間違いありませんか。<br>
 		     Is this information correct?
 		</div><br>
@@ -88,8 +88,8 @@ if(isset($_POST["newaccountconfirmed"])) {
 		<?php echo "Username:",$_SESSION["username"] ?><br>
 		<?php echo "Password:",$_SESSION["userpass"] ?><br><br>
 	<form action="" method="post">
-		<input type="submit" class="registration" name="back" value="戻る">
-		<input type="submit" class="registration" name="newaccountconfirmed" value="登録！">
+		<button type="submit" class="registration" name="back">戻る<br>Back to previous page</button>
+		<button type="submit" class="registration" name="newaccountconfirmed">登録！<br>Register this information!</button>
 	</form>
 </div>
 <?php include './footer.php' ?>

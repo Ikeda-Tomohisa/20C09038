@@ -66,9 +66,9 @@ if(isset($_POST["newaccountconfirm"])) {
 	</div>
 	<form action="" method="post">
 		<label for="usertype">&thinsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Usertype:</label>
-		<input type="radio" class="margintop20" name="usertype" value="t">
+		<input type="radio" class="margintop10" name="usertype" value="t">
 		<label for="t">教師/teacher</label>
-		<input type="radio" class="margintop20" name="usertype" value="s">
+		<input type="radio" class="margintop10" name="usertype" value="s">
 		<label for="s">生徒/student</label><br>
 	    <label for="username">&ensp;&emsp;&emsp;&emsp;&nbsp;Username:</label>
 		<input type="text" class="textbox2" name="username" placeholder="ユーザー名を入力"><br>
@@ -77,7 +77,6 @@ if(isset($_POST["newaccountconfirm"])) {
 		<label for="pass">Confirm Password:</label>
 		<input type="password" class="textbox2" name="userpass2" placeholder="パスワードを入力(確認用)"><br><br>
 		<button type="submit" class="registration" name="newaccountconfirm">確認画面へ<br>To confirmation screen</button>
-		<!-- <input type="submit" class="registration" name="newaccountconfirm" value="確認画面へ"> -->
 		<!-- <input type="hidden" name="token" value="<?=$token?>"> -->
 	</form>
 </div>

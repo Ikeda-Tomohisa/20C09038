@@ -28,37 +28,28 @@ if(isset($_POST["login"])) {
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if (password_verify($userpass, $row['password'])) {
                     session_regenerate_id(true);
-
-                    // 入力したIDのユーザー名を取得
-                    $id = $row['userid'];
-                    $sql = "SELECT * FROM users WHERE userid = $id";  //入力したIDからユーザー名を取得
-                    $stmt = $dbh->query($sql);
-                    foreach ($stmt as $row) {
-                        $_SESSION["userID"] = $row['userid'];
-                        $_SESSION["userNAME"] = $row['username'];
-                        $_SESSION["userTYPE"] = $row['usertype'];
-                    }
+                    $_SESSION["userID"] = $row['userid'];
+                    $_SESSION["userNAME"] = $row['username'];
+                    $_SESSION["userTYPE"] = $row['usertype'];
                     $_SESSION["passWORD"] = $_POST['userpass'];
-                    header("Location: ./pagemyhome.php");  // メイン画面へ遷移
-                    exit();  // 処理終了
+                    $_SESSION["classID"] = $row['classid'];
+                    $_SESSION["studentID"] = $row['studentid'];
+                    
+                    header("Location: ./pagemyhome.php");
+                    exit();
                 } else {
-                    // 認証失敗
                     $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
                 }
             } else {
-                // 4. 認証成功なら、セッションIDを新規に発行する
-                // 該当データなし
                 $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
             }
-            
             $dbh = null;
         } catch (PDOException $e) {
             $errorMessage = 'データベースエラー';
             //$errorMessage = $sql;
-            $e->getMessage();
-            echo $e->getMessage();
+            //$e->getMessage();
+            //echo $e->getMessage();
         }
-        $dbh = null;
     }
 }
 ?>
