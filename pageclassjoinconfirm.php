@@ -20,12 +20,11 @@ $dbpass = "hogehoge";
 
 $errorMessage = "";
 
-if(isset($_POST["newclassconfirmed"])) {
-    if (!empty($_SESSION["classname"]) && !empty($_SESSION["classid"])) {
+if(isset($_POST["classjoinconfirmed"])) {
+    if (!empty($_SESSION["classid"]) && !empty($_SESSION["studentid"])) {
         //teacherのstudentidは0とする。
-        $classname = $_SESSION["classname"];
         $classid = $_SESSION["classid"];
-        $studentid = 0;
+        $studentid = $_SESSION["studentid"];
         $userid = $_SESSION["userID"];
 
         try{
@@ -34,16 +33,11 @@ if(isset($_POST["newclassconfirmed"])) {
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         
-        $stmt = $dbh->prepare("INSERT INTO class(classid, classname) VALUES (:classid, :classname)");
+        $stmt = $dbh->prepare("UPDATE user SET classid = :classid, studentid = :studentid WHERE userid = :userid");
         $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
-        $stmt->bindValue(':classname', $classname, PDO::PARAM_STR);
+        $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
+        $stmt->bindValue(':userid', $userid, PDO::PARAM_INT);
         $stmt->execute();
-        
-        $stmt2 = $dbh->prepare("UPDATE user SET classid = :classid, studentid = :studentid WHERE userid = :userid");
-        $stmt2->bindValue(':classid', $classid, PDO::PARAM_STR);
-        $stmt2->bindValue(':studentid', $studentid, PDO::PARAM_INT);
-        $stmt2->bindValue(':userid', $userid, PDO::PARAM_INT);
-        $stmt2->execute();
         
         header("Location: ./pagenewclasscompleted.php");
         exit();
@@ -56,7 +50,7 @@ if(isset($_POST["newclassconfirmed"])) {
         }
     }
 }else if(isset($_POST["back"])) {
-    header("Location: ./pagenewaccount.php");
+    header("Location: ./pageclassjoin.php");
     exit();
 }
 ?>
@@ -81,10 +75,13 @@ if(isset($_POST["newclassconfirmed"])) {
 		</div><br>
 		<?php echo "Classname:",$_SESSION["classname"] ?><br>
 		<?php echo "ClassID:",$_SESSION["classid"] ?><br>
-		<?php echo "Teacher's name:",$_SESSION["userNAME"] ?><br><br>
+		<?php echo "Teacher name:",$_SESSION["teachername"] ?><br><br>
+		
+		<?php echo "StudentID:",$_SESSION["studentid"] ?><br>
+		<?php echo "Student name:",$_SESSION["userNAME"] ?><br><br>
 	<form action="" method="post">
 		<button type="submit" class="registration" name="back">戻る<br>Back to previous page</button>
-		<button type="submit" class="registration" name="newclassconfirmed">登録！<br>Register this information!</button>
+		<button type="submit" class="registration" name="classjoinconfirmed">登録！<br>Register this information!</button>
 	</form>
 </div>
 <?php include './footer.php' ?>

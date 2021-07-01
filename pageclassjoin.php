@@ -35,20 +35,31 @@ if(isset($_POST["classjoinconfirm"])) {
         $errorMessageEnglish = "StudentID should be a half-width number.";
     } 
     
-    if (!empty($_POST["classname"]) && !empty($_POST["classid"]) && $errorMessage == "") {
+    if (!empty($_POST["classid"]) && !empty($_POST["studentid"]) && $errorMessage == "") {
         $classid = $_POST["classid"];
+        $studentid = 0;
         //pdoでclassidの存在チェック (存在しないclassidを拒否)
         try {
             $dbh = new PDO($dsn, $dbuser, $dbpass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $query = $dbh->prepare('SELECT COUNT(*) FROM class WHERE classid = :classid LIMIT 1');
-            $query->bindValue(':classid', $classid, PDO::PARAM_STR);
-            $query->execute();
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             
-            $count = (int)$query->fetchColumn();
-            if ($count > 0) {
+            $stmt = $dbh->prepare('SELECT * FROM class WHERE classid = :classid LIMIT 1');
+            $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+            $stmt->execute();
+            
+            $stmt2 = $dbh->prepare('SELECT * FROM user WHERE classid = :classid AND studentid = :studentid LIMIT 1');
+            $stmt2->bindValue(':classid', $classid, PDO::PARAM_STR);
+            $stmt2->bindValue(':studentid', $studentid, PDO::PARAM_INT);
+            $stmt2->execute();
+            
+            $result = $stmt->fetch();
+            $result2 = $stmt2->fetch();
+            if ($result > 0) {
+                $_SESSION["classname"] = $result["classname"];
                 $_SESSION["classid"] = $_POST["classid"];
+                $_SESSION["teachername"] = $result2["username"];
                 $_SESSION["studentid"] = $_POST["studentid"];
                 header("Location: ./pageclassjoinconfirm.php");
                 exit();
@@ -59,7 +70,7 @@ if(isset($_POST["classjoinconfirm"])) {
             }
         } catch (PDOException $e) {
             $errorMessage = "データベースエラー";
-            //$e->getMessage();
+            echo $e->getMessage();
         }
     }
 }else if(isset($_POST["back"])) {

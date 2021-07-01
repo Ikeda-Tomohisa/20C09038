@@ -77,7 +77,6 @@ if(isset($_POST["newclassconfirm"])) {
 
 <body>
 <?php include './header.php' ?>
-
 <div class="center">
 	<h1>クラス新規作成<span>Create new class</span></h1>
 	<div class="red"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
