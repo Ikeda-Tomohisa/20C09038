@@ -27,37 +27,35 @@ $dbpass = "hogehoge";
 $errorMessage = "";
 
 if(isset($_POST["newaccountconfirmed"])) {
-    if (!empty($_SESSION["usertype"]) && !empty($_SESSION["username"]) && !empty($_SESSION["userpass"])) {
+    if (!empty($_SESSION["usertype"]) && !empty($_SESSION["userid"]) && !empty($_SESSION["username"]) && !empty($_SESSION["userpass"])) {
         // 入力したユーザIDとパスワードを格納
         $usertype = $_SESSION["usertype"];
+        $userid = $_SESSION["userid"];
         $username = $_SESSION["username"];
         $userpass = $_SESSION["userpass"];
         $userpass_hash = password_hash($userpass, PASSWORD_DEFAULT);
 
         try{
-
-        $dbh = new PDO($dsn, $dbuser, $dbpass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //$pdh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        
-        $stmt = $dbh->prepare("INSERT INTO user(usertype, username, password) VALUES (:usertype, :username, :userpass)");
-        
-        $stmt->bindValue(':usertype', $usertype, PDO::PARAM_STR);
-        $stmt->bindValue(':username', $username, PDO::PARAM_STR);
-        $stmt->bindValue(':userpass', $userpass_hash, PDO::PARAM_STR);
-        
-        $stmt->execute();
-        
-        $_SESSION["userid"] = $dbh->lastInsertId();
-        
-        header("Location: ./pagenewaccountcompleted.php");
-        exit();
-        
-        $dbh = null;
+            $dbh = new PDO($dsn, $dbuser, $dbpass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            
+            $stmt = $dbh->prepare("INSERT INTO users(usertype, userid, username, password) VALUES (:usertype, :userid, :username, :userpass)");
+            
+            $stmt->bindValue(':usertype', $usertype, PDO::PARAM_STR);
+            $stmt->bindValue(':userid', $userid, PDO::PARAM_STR);
+            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+            $stmt->bindValue(':userpass', $userpass_hash, PDO::PARAM_STR);
+            $stmt->execute();
+            
+            header("Location: ./pagenewaccountcompleted.php");
+            exit();
+            
+            $dbh = null;
         }catch(Exception $e){
             $errorMessage = 'データベースエラー';
+            $errorMessageEnglish = "Database Error";
             //echo $e->getMessage();
-            die();
         }
     }
 }else if(isset($_POST["back"])) {
@@ -85,6 +83,7 @@ if(isset($_POST["newaccountconfirmed"])) {
 		     Is this information correct?
 		</div><br>
 		<?php echo "Usertype:",$temporaryusertype ?><br>
+		<?php echo "UserID:",$_SESSION["userid"] ?><br>
 		<?php echo "Username:",$_SESSION["username"] ?><br>
 		<?php echo "Password:",$_SESSION["userpass"] ?><br><br>
 	<form action="" method="post">

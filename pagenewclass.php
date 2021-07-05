@@ -19,18 +19,18 @@ $errorMessageEnglish = "";
 if(isset($_POST["newclassconfirm"])) {
     $errorMessage = "";
     $errorMessageEnglish = "";
-    if (empty($_POST["classname"]) || empty($_POST["classid"])) {
-        $errorMessage = "クラス名またはクラスIDが未入力です。";
-        $errorMessageEnglish = "Classname or classID is not entered.";
+    if (empty($_POST["classname"]) || empty($_POST["classid"]) || empty($_POST["teachername"])) {
+        $errorMessage = "クラス名またはクラスIDまたは先生の名前が未入力です。";
+        $errorMessageEnglish = "Classname or classID or teacher's name is not entered.";
     } else if (mb_strlen($_POST["classid"]) < 6) {
         $errorMessage = "ClassIDは6文字以上にしてください。";
         $errorMessageEnglish = "ClassID should be at least 6 characters.";
-    } else if (!preg_match("/\A[a-z\d]{8,100}+\z/i" , $_POST["classid"])) {
+    } else if (!preg_match("/\A[a-z\d]{8,255}+\z/i" , $_POST["classid"])) {
         $errorMessage = "ClassIDは半角英数字にしてください。";
         $errorMessageEnglish = "ClassID should be a single-byte alphanumeric characters.";
     }
     
-    if (!empty($_POST["classname"]) && !empty($_POST["classid"]) && $errorMessage == "") {
+    if (!empty($_POST["classname"]) && !empty($_POST["classid"]) && !empty($_POST["teachername"]) && $errorMessage == "") {
         $classid = $_POST["classid"];
         //pdoでclassidの重複チェック（既にあるclassidを拒否)
         try {
@@ -49,6 +49,7 @@ if(isset($_POST["newclassconfirm"])) {
             } else {
                 $_SESSION["classname"] = $_POST["classname"];
                 $_SESSION["classid"] = $_POST["classid"];
+                $_SESSION["teachername"] = $_POST["teachername"];
                     
                 header("Location: ./pagenewclassconfirm.php");
                 exit();
@@ -56,6 +57,7 @@ if(isset($_POST["newclassconfirm"])) {
             
         } catch (PDOException $e) {
             $errorMessage = "データベースエラー";
+            $errorMessageEngllish = "Database Error";
             //$e->getMessage();
         }
     } 
@@ -86,11 +88,12 @@ if(isset($_POST["newclassconfirm"])) {
 	Please enter the classID using 6 or more single-byte alphanumeric characters.
 	</div>
 	<form action="" method="post">
-	    <label for="username">Classname:</label>
+	    <label for="username">&emsp;&emsp;&thinsp;&thinsp;Classname:</label>
 		<input type="text" class="textbox2" name="classname" placeholder="クラス名を入力"><br>
-		<label for="pass">&emsp;&nbsp;&thinsp;ClassID:</label>
+		<label for="pass">&emsp;&emsp;&emsp;&emsp;ClassID:</label>
 		<input type="password" class="textbox2" name="classid" placeholder="クラスIDを入力"><br>
-		<div class="margintop10"><?php echo "Teacher's name:",$_SESSION["userNAME"] ?><br><br>
+		<label for="teachername">Teacher's name:</label>
+		<input type="text" class="textbox2" name="teachername" placeholder="先生の名前を入力"><br><br>
 		<button type="submit" class="registration" name="newclassconfirm">確認画面へ<br>To confirmation screen</button><br><br>
 		<button type="submit" class="registration" name="back">戻る<br>Back to previous page</button>
 		<!-- <input type="hidden" name="token" value="<?=$token?>"> -->

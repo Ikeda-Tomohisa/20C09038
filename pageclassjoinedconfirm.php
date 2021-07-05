@@ -15,7 +15,7 @@ try {
     $dbh = new PDO($dsn, $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $stmt = $dbh->prepare('SELECT * FROM user WHERE userid = :userid');
+    $stmt = $dbh->prepare('SELECT * FROM users WHERE userid = :userid');
     $stmt->bindValue(':userid', $userid, PDO::PARAM_INT);
     $stmt->execute();
     

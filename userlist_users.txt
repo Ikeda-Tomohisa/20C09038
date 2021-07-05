@@ -1,0 +1,4 @@
+userid,username,password,usertype
+
+first1,abcde,aaaaaaaa,t
+second2,aiueo,eeeeeeee,s

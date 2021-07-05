@@ -25,9 +25,6 @@
 	height:70px;
 	font-size:18px;
 }
-.rightspace{
-	margin-right:20px;
-}
 .red{
 	color:#ff0000;
 }
@@ -56,6 +53,9 @@
 span{
 	display:block;
 	font-size:20px;
+}
+.rightspace{
+	margin: 0px 20px;
 }
 .bigbold{
 	font-size:24px;

@@ -14,8 +14,8 @@ try {
     $dbh = new PDO($dsn, $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $stmt = $dbh->prepare('SELECT * FROM user WHERE userid = :userid');
-    $stmt->bindValue(':userid', $userid, PDO::PARAM_INT);
+    $stmt = $dbh->prepare('SELECT * FROM users WHERE userid = :userid');
+    $stmt->bindValue(':userid', $userid, PDO::PARAM_STR);
     $stmt->execute();
     
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,6 +24,7 @@ try {
     $usertype = $row['usertype'];
     $classid = $row['classid'];
     $studentid = $row['studentid'];
+    $studentname = $row['studentname'];
     
     $stmt2 = $dbh->prepare('SELECT * FROM class WHERE classid = :classid');
     $stmt2->bindValue(':classid', $classid, PDO::PARAM_STR);
@@ -39,7 +40,7 @@ try {
     
     if ($usertype == "t") {
         $yourusertype = "教師/teacher";
-    }else{
+    } else if ($usertype == "s"){
         $yourusertype = "生徒/student";
     }
     if ($studentid == 0) {
@@ -47,11 +48,24 @@ try {
     }
     if (is_null($classid)) {
         $classid = "";
-        $studentid = "";
         $classname = "";
+        $teachername = "";
+        $studentid = "";
+        $studentname = "";
         $attention = "クラスに参加していません。";
         $attentionEnglish = "NOT participate in the class.";
+    } else {
+        $studentid_teacher = 0;
+        $stmt3 = $dbh->prepare('SELECT * FROM user WHERE classid = :classid AND studentid = :studentid_teacher');
+        $stmt3->bindValue(':classid', $classid, PDO::PARAM_STR);
+        $stmt3->bindValue(':studentid_teacher', $studentid_teacher, PDO::PARAM_INT);
+        $stmt3->execute();
+        
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+        $teachername = $row3['username'];
     }
+    
+    $dbh = null;
 } catch (PDOException $e) {
     $errorMessage = 'データベースエラー';
     //$e->getMessage();
@@ -80,11 +94,14 @@ try {
 <?php echo "username:",$username ?><br><br>
 <?php echo "usertype:",$yourusertype ?><br><br>
 <?php echo "password:",$_SESSION["passWORD"] ?><br><br>
+<div>--------------------</div><br>
 <div class="red"><?php echo htmlspecialchars($attention, ENT_QUOTES); ?></div>
 <div class="red"><?php echo htmlspecialchars($attentionEnglish, ENT_QUOTES); ?></div>
 <?php echo "classID:",$classid ?><br><br>
 <?php echo "classname:",$classname ?><br><br>
+<?php echo "teachername:",$teachername ?><br><br>
 <?php echo "studentid:",$studentid ?><br><br>
+<?php echo "studentname:",$studentname ?><br><br>
 
 <button class="registration" onclick="location.href='./pageuser_class_settings.php'">戻る<br>Back to previous page</button><br><br>
 <button class="registration" onclick="location.href='./pagelogout.php'">ログアウト<br>to logout</button>

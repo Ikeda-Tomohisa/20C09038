@@ -21,28 +21,30 @@ $dbpass = "hogehoge";
 $errorMessage = "";
 
 if(isset($_POST["classjoinconfirmed"])) {
-    if (!empty($_SESSION["classid"]) && !empty($_SESSION["studentid"])) {
+    if (!empty($_SESSION["classid"]) && !empty($_SESSION["studentid"]) && !empty($_SESSION["studentname"])) {
         //teacherのstudentidは0とする。
         $classid = $_SESSION["classid"];
         $studentid = $_SESSION["studentid"];
+        $studentname = $_SESSION["studentname"];
         $userid = $_SESSION["userID"];
-
+        
         try{
-
-        $dbh = new PDO($dsn, $dbuser, $dbpass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        
-        $stmt = $dbh->prepare("UPDATE user SET classid = :classid, studentid = :studentid WHERE userid = :userid");
-        $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
-        $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
-        $stmt->bindValue(':userid', $userid, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        header("Location: ./pagenewclasscompleted.php");
-        exit();
-        
-        $dbh = null;
+            
+            $dbh = new PDO($dsn, $dbuser, $dbpass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            
+            $stmt = $dbh->prepare("UPDATE users SET classid = :classid, studentid = :studentid, studentname = :studentname WHERE userid = :userid");
+            $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+            $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
+            $stmt->bindValue(':studentname', $studentname, PDO::PARAM_STR);
+            $stmt->bindValue(':userid', $userid, PDO::PARAM_STR);
+            $stmt->execute();
+            
+            header("Location: ./pagenewclasscompleted.php");
+            exit();
+            
+            $dbh = null;
         }catch(Exception $e){
             $errorMessage = 'データベースエラー';
             //echo $e->getMessage();
@@ -78,7 +80,7 @@ if(isset($_POST["classjoinconfirmed"])) {
 		<?php echo "Teacher name:",$_SESSION["teachername"] ?><br><br>
 		
 		<?php echo "StudentID:",$_SESSION["studentid"] ?><br>
-		<?php echo "Student name:",$_SESSION["userNAME"] ?><br><br>
+		<?php echo "Student name:",$_SESSION["studentname"] ?><br><br>
 	<form action="" method="post">
 		<button type="submit" class="registration" name="back">戻る<br>Back to previous page</button>
 		<button type="submit" class="registration" name="classjoinconfirmed">登録！<br>Register this information!</button>

@@ -20,8 +20,8 @@ if(isset($_POST["login"])) {
             $dbh = new PDO($dsn, $dbuser, $dbpass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $stmt = $dbh->prepare('SELECT * FROM user WHERE userid = :userid');
-            $stmt->bindValue(':userid', $userid, PDO::PARAM_INT);
+            $stmt = $dbh->prepare('SELECT * FROM users WHERE userid = :userid');
+            $stmt->bindValue(':userid', $userid, PDO::PARAM_STR);
             $stmt->execute();
             $userpass = $_POST["userpass"];
             
@@ -34,21 +34,24 @@ if(isset($_POST["login"])) {
                     $_SESSION["passWORD"] = $_POST['userpass'];
                     $_SESSION["classID"] = $row['classid'];
                     $_SESSION["studentID"] = $row['studentid'];
+                    $_SESSION["studentname"] = $row['studentname'];
                     
                     header("Location: ./pagemyhome.php");
                     exit();
+                    $dbh = null;
                 } else {
                     $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
+                    $errorMessageEnglish = 'The userID or password is incorrect.';
                 }
             } else {
                 $errorMessage = 'ユーザーIDまたはパスワードに誤りがあります。';
+                $errorMessageEnglish = 'The userID or password is incorrect.';
             }
             $dbh = null;
         } catch (PDOException $e) {
             $errorMessage = 'データベースエラー';
-            //$errorMessage = $sql;
-            //$e->getMessage();
-            //echo $e->getMessage();
+            $errorMessageEnglish = "Database Error";
+            echo $e->getMessage();
         }
     }
 }

@@ -8,6 +8,12 @@ if ($_SESSION["usertype"] == "t") {
 }else{
     $realusertype = "生徒/student";
 }
+
+session_regenerate_id(true);
+$_SESSION["userID"] = $_SESSION['userid'];
+$_SESSION["userNAME"] = $_SESSION['username'];
+$_SESSION["userTYPE"] = $_SESSION['usertype'];
+$_SESSION["passWORD"] = $_SESSION['userpass'];
 ?>
 
 <?php include './globalcommon.php' ?>

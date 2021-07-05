@@ -25,7 +25,8 @@ session_start();
 	     You can check it in the user account settings.
 	</div><br>
 	<?php echo "ClassID:",$_SESSION["classid"] ?><br>
-	<?php echo "Classname:",$_SESSION["classname"] ?><br><br>
+	<?php echo "Classname:",$_SESSION["classname"] ?><br>
+	<?php echo "Teacher's name:",$_SESSION["teachername"] ?><br><br>
 	<button class="registration" onclick="location.href='./pagemyhome.php'">マイホームへ<br>to myhome</button>
 </div>
 <?php include './footer.php' ?>

@@ -29,7 +29,7 @@ session_start();
 	<?php echo "Teacher name:",$_SESSION["teachername"] ?><br><br>
 	
 	<?php echo "StudentID:",$_SESSION["studentid"] ?><br>
-	<?php echo "Student name:",$_SESSION["userNAME"] ?><br><br>
+	<?php echo "Student name:",$_SESSION["studentname"] ?><br><br>
 	<button class="registration" onclick="location.href='./pagemyhome.php'">マイホームへ<br>to myhome</button>
 </div>
 <?php include './footer.php' ?>
