@@ -22,7 +22,7 @@ session_start();
 <a href="./math.php">教科書とノート</a><br><br>
 <?php if($_SESSION["userTYPE"] == "t") : ?> 
 <a href="./pagehowomathteacher.php">宿題（先生用）</a><br><br>
-プリント（先生用）<br><br>
+<a href="./pagehandoutmathteacher.php">プリント（先生用）</a><br><br>
 <?php elseif($_SESSION["userTYPE"] == "s") : ?>
 宿題（生徒用）<br><br>
 プリント（生徒用）<br><br>

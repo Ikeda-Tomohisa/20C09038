@@ -1,4 +1,4 @@
-<!-- page give homework math-->
+<!-- page give handout math-->
 <?php
 session_start();
 
@@ -12,7 +12,7 @@ $errorMessageEnglish = "";
 $fileuploadMessage = "";
 $fileuploadMessageEnglish = "";
 
-if(isset($_POST["givehomework"])) {
+if(isset($_POST["givehandout"])) {
     $errorMessage = "";
     $errorMessageEnglish = "";
     //print_r($_FILES);
@@ -39,8 +39,8 @@ if(isset($_POST["givehomework"])) {
                 $errorMessageEnglish = "NOT participate in the class.This function cannot be used if you don't participate in the class.";
             } else if ($errorMessage == "") {
                 date_default_timezone_set('Asia/Tokyo');
-                $directory_path = "./homeworkmath"."_".$classid;
-                $directory_path2 = "./homeworkmath"."_".$classid."/".date("Y_m_d");
+                $directory_path = "./handoutmath"."_".$classid;
+                $directory_path2 = "./handoutmath"."_".$classid."/".date("Y_m_d");
                 
                 if(!file_exists($directory_path)){
                     mkdir($directory_path);
@@ -79,7 +79,7 @@ if(isset($_POST["givehomework"])) {
 
 <head>
 <meta charset="utf-8">
-<title>myapp-数学-宿題を出す</title>
+<title>myapp-数学-プリントを出す</title>
 <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -87,7 +87,7 @@ if(isset($_POST["givehomework"])) {
 <?php include './header.php' ?>
 
 <div class="center">
-    <h1>数学-宿題を出す<span>give mathematics-homework</span></h1>
+    <h1>数学-プリントを出す<span>give mathematics-handout</span></h1>
     <div class="red">
     同じ名前のファイルがある場合は上書きされます。<br>
     If there is a file with the same name,it will be overwritten.
@@ -100,7 +100,7 @@ if(isset($_POST["givehomework"])) {
     <form action="" method="POST" enctype="multipart/form-data">
         <input type="file" name="image"><br><br>
         
-        <button type="submit" class="registration" name="givehomework">ファイルに送信する<br>Send this file</button><br><br>
+        <button type="submit" class="registration" name="givehandout">ファイルに送信する<br>Send this file</button><br><br>
         <button class="registration" name="back">戻る<br>Back to previous page</button><br>
     </form>
 </div>
