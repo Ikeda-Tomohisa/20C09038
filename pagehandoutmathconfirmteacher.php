@@ -1,6 +1,29 @@
 <!-- page handout math confirm teacher-->
 <?php
 session_start();
+
+$dsn = "mysql:host=localhost; dbname=userlist; charset=utf8";
+$dbuser = "hoge";
+$dbpass = "hogehoge";
+$classid = $_SESSION["classID"];
+
+$errorMessage = "";
+$errorMessageEnglish = "";
+
+try {
+    $dbh = new PDO($dsn, $dbuser, $dbpass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $stmt = $dbh->prepare('SELECT date FROM images WHERE classid = :classid');
+    $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+    $stmt->execute();
+    
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    $errorMessage = 'データベースエラー';
+    $errorMessageEnglish = "Database Error";
+    //echo $e->getMessage();
+}
 ?>
 
 <?php include './globalcommon.php' ?>
@@ -19,18 +42,15 @@ session_start();
 <div class="center">
     <h1>数学-プリントを確認する<span>give mathematics-handout</span></h1>
     <?php
-    foreach (glob("handoutmath_".$_SESSION["classID"]."/*") as $filename) {
-        $filename = str_replace("handoutmath_".$_SESSION["classID"]."/", "", $filename);
-        if(strpos($filename, '.php') !== false) {
-            $filename = str_replace($filename.".php", "", $filename);
+    foreach ($result as $dates) {
+        print '<a href="class_'.$classid.'/handoutmathdates/'.$dates.'.php">'.$dates.'</a><br><br>';
+        
+        if(!file_exists("class_".$classid."/handoutmathdates")){
+            mkdir("class_".$classid."/handoutmathdates");
         }
-        print '<a href="pagehandoutmathconfirmteacher.php?date=' . $filename . '">' . $filename . '</a><br><br>';
-        if(!file_exists("handoutmathdates_".$_SESSION["classID"])){
-            mkdir("handoutmathdates_".$_SESSION["classID"]);
-        }
-        if(!file_exists("handoutmathdates_".$_SESSION["classID"]."/".$filename.".php")){
-            file_put_contents("handoutmathdates_".$_SESSION["classID"]."/".$filename.".php","<?php echo hello! ?>\n");
-            file_put_contents("handoutmathdates_".$_SESSION["classID"]."/".$filename.".php","<?php echo HELLO! ?>",FILE_APPEND);
+        if(!file_exists("class_".$classid."/handoutmathdates/".$dates.".php")){
+            file_put_contents("class_".$classid."/handoutmathdates/".$dates.".php","<?php $"."date = \"".$dates."\"; ?>".PHP_EOL);
+            file_put_contents("class_".$classid."/handoutmathdates/".$dates.".php","<?php include '../../dates.php' ?>",FILE_APPEND);
         }
     }
     ?>
