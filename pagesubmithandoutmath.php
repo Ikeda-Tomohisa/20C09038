@@ -31,14 +31,15 @@ if(isset($_POST["givehandout"])) {
     }
 
     if ($errorMessage == "") {
-        $filename = $_FILES['image']['name'];
         $date = date("Y_m_d");
+        $filename = $_FILES['image']['name'];
         $tmpfilename = $_FILES['image']['tmp_name'];
         
         date_default_timezone_set('Asia/Tokyo');
-        $directory_path = "class"."_".$classid;
-        $directory_path2 = $directory_path."/handoutmath";
-        $directory_path3 = $directory_path2."/".$date;
+        $directory_path = "class_".$classid;
+        $directory_path2 = $directory_path."/handoutmath_student";
+        $directory_path3 = $directory_path2."/".$studentid;
+        $directory_path4 = $directory_path3."/".$date;
         
         if(!file_exists($directory_path)){
             mkdir($directory_path);
@@ -49,17 +50,21 @@ if(isset($_POST["givehandout"])) {
         if(!file_exists($directory_path3)){
             mkdir($directory_path3);
         }
-        $save = $directory_path3."/".basename($filename);
+        if(!file_exists($directory_path4)){
+            mkdir($directory_path4);
+        }
+        $save = $directory_path4."/".basename($filename);
         
         try {
             $dbh = new PDO($dsn, $dbuser, $dbpass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             
-            $stmt = $dbh->prepare("SELECT filename FROM images WHERE subject = :subject AND date = :date AND filename = :filename LIMIT 1");
+            $stmt = $dbh->prepare("SELECT filename FROM images WHERE subject = :subject AND date = :date AND filename = :filename AND studentid = :studentid LIMIT 1");
             $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
             $stmt->bindValue(':date', $date, PDO::PARAM_STR);
             $stmt->bindValue(':filename', $filename, PDO::PARAM_STR);
+            $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
             $stmt->execute();
             
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -89,7 +94,7 @@ if(isset($_POST["givehandout"])) {
         $dbh = null;
     }
 } else if (isset($_POST["back"])) {
-    header("Location: ./pagehandoutmathteacher.php");
+    header("Location: ./pagehandoutmathstudent.php");
     exit();
 }
 
@@ -101,7 +106,7 @@ if(isset($_POST["givehandout"])) {
 
 <head>
 <meta charset="utf-8">
-<title>myapp-数学-プリントを出す</title>
+<title>myapp-数学-プリントを提出</title>
 <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -109,10 +114,10 @@ if(isset($_POST["givehandout"])) {
 <?php include './header.php' ?>
 
 <div class="center">
-    <h1>数学-プリントを出す<span>give mathematics-handout</span></h1>
+    <h1>数学-プリントを提出<span>give mathematics-handout</span></h1>
     <div class="red">
-    同じ日に同じ名前のファイルをアップロードした場合は上書きされます。<br>
-    If you upload the same file name on the same day,it will be overwritten.
+    同じ日に同じ名前のファイルを提出した場合は上書きされます。<br>
+    If you submit the same file name on the same day,it will be overwritten.
     </div><br>
     <div class="red"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
     <div class="red"><?php echo htmlspecialchars($errorMessageEnglish, ENT_QUOTES); ?></div>

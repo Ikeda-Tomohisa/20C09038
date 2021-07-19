@@ -6,6 +6,7 @@ $dsn = "mysql:host=localhost; dbname=userlist; charset=utf8";
 $dbuser = "hoge";
 $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
+$studentid = 0;
 $errorMessage = "";
 $errorMessageEnglish = "";
 
@@ -13,9 +14,10 @@ try {
     $dbh = new PDO($dsn, $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $stmt = $dbh->prepare('SELECT filename FROM images WHERE classid = :classid AND date = :date');
+    $stmt = $dbh->prepare('SELECT filename FROM images WHERE classid = :classid AND date = :date AND studentid = :studentid');
     $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
     $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+    $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
     $stmt->execute();
     
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
