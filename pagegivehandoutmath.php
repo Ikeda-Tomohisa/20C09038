@@ -7,6 +7,7 @@ $dbuser = "hoge";
 $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $studentid = $_SESSION["studentID"];
+$subject = "math";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -16,7 +17,7 @@ $fileuploadMessageEnglish = "";
 if(isset($_POST["givehandout"])) {
     $errorMessage = "";
     $errorMessageEnglish = "";
-    //print_r($_FILES);
+    print_r($_FILES);
     //print_r($_FILES["image"]["name"]);
     if($_FILES['image']['size'] === 0) {
         $errorMessage = "ファイルが選択されていません。";
@@ -55,13 +56,24 @@ if(isset($_POST["givehandout"])) {
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             
-            $stmt = $dbh->prepare("INSERT INTO images(filename, date, classid, studentid) VALUES (:filename, :date, :classid, :studentid)");
-            $stmt->bindValue(':filename', $filename, PDO::PARAM_STR);
+            $stmt = $dbh->prepare("SELECT filename FROM images WHERE subject = :subject AND date = :date AND filename = :filename LIMIT 1");
+            $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
             $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-            $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
-            $stmt->bindValue(':studentid', $studentid, PDO::PARAM_INT);
+            $stmt->bindValue(':filename', $filename, PDO::PARAM_STR);
             $stmt->execute();
             
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result  == 0) {
+                
+                $stmt3 = $dbh->prepare("INSERT INTO images(filename, date, classid, studentid, subject) VALUES (:filename, :date, :classid, :studentid, :subject)");
+                $stmt3->bindValue(':filename', $filename, PDO::PARAM_STR);
+                $stmt3->bindValue(':date', $date, PDO::PARAM_STR);
+                $stmt3->bindValue(':classid', $classid, PDO::PARAM_STR);
+                $stmt3->bindValue(':studentid', $studentid, PDO::PARAM_INT);
+                $stmt3->bindValue(':subject', $subject, PDO::PARAM_STR);
+                $stmt3->execute();
+                
+            }
             if(move_uploaded_file($tmpfilename, $save)){
                 $fileuploadMessage = "アップロード成功！";
                 $fileuploadMessageEnglish = "Upload successful";
@@ -77,7 +89,7 @@ if(isset($_POST["givehandout"])) {
         $dbh = null;
     }
 } else if (isset($_POST["back"])) {
-    header("Location: ./pagehowomathteacher.php");
+    header("Location: ./pagehandoutmathteacher.php");
     exit();
 }
 
@@ -99,8 +111,8 @@ if(isset($_POST["givehandout"])) {
 <div class="center">
     <h1>数学-プリントを出す<span>give mathematics-handout</span></h1>
     <div class="red">
-    同じ名前のファイルがある場合は上書きされます。<br>
-    If there is a file with the same name,it will be overwritten.
+    同じ日に同じ名前のファイルをアップロードした場合は上書きされます。<br>
+    If you upload the same file name on the same day,it will be overwritten.
     </div><br>
     <div class="red"><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
     <div class="red"><?php echo htmlspecialchars($errorMessageEnglish, ENT_QUOTES); ?></div>

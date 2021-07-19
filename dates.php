@@ -18,7 +18,7 @@ try {
     $stmt->bindValue(':date', $date, PDO::PARAM_STR);
     $stmt->execute();
     
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
     $errorMessage = 'データベースエラー';
     $errorMessageEnglish = "Database Error";
@@ -38,30 +38,40 @@ try {
 
 <body>
 <?php include '../../header.php' ?>
-
 <div class="center">
     <h1>数学-プリントを確認する<span>give mathematics-handout</span></h1>
     <?php
-    foreach ($result as $files) {
-        print '<a href="class_'.$classid.'/handoutmathfiles/'.$files.'.php">'.$files.'</a><br><br>';
+    for($i = 0; $i < count($result); $i++) {
         
-        if (!file_exists("class_".$classid."/handoutmathfiles")) {
-            mkdir("class_".$classid."/handoutmathfiles");
+        if (!file_exists("../handoutmathfiles")) {
+            mkdir("../handoutmathfiles");
         }
-        if (strpos($files, ".png") !== false) {
-            $files = str_replace(".png", "", $files);
-            if (!file_exists("class_".$classid."/handoutmathfiles/".$files.".php")) {
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","<?php $"."data = file_get_contents(../handoutmath/".$files.");".PHP_EOL);
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","header('Content-type: image/png');".PHP_EOL,FILE_APPEND);
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","echo $"."data; ?>",FILE_APPEND);
+        if (!file_exists("../handoutmathfiles/".$date)) {
+            mkdir("../handoutmathfiles/".$date);
+        }
+        if (strpos($result[$i]["filename"], ".png") !== false) {
+            $files = str_replace(".png", "", $result[$i]["filename"]);
+            print '<a href="'.'../handoutmathfiles/'.$date.'/'.$files.'.php">'.$files.'</a><br><br>';
+            if (!file_exists("../handoutmathfiles/".$date.'/'.$files.".php")) {
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","<?php $"."data = file"."_get_contents(\"../../handoutmath/".$date."/".$files.".png\");".PHP_EOL);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","header('Content-type: image/png');".PHP_EOL,FILE_APPEND);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","echo $"."data; ?>",FILE_APPEND);
             }
-        } else {
-            $files = str_replace(".jpg", "", $files);
-            $files = str_replace(".jpeg", "", $files);
-            if (!file_exists("class_".$classid."/handoutmathfiles/".$files.".php")) {
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","<?php $"."data = file_get_contents(../handoutmath/".$files.");".PHP_EOL);
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","header('Content-type: image/jpg');".PHP_EOL,FILE_APPEND);
-                file_put_contents("class_".$classid."/handoutmathfiles/".$files.".php","echo $"."data; ?>",FILE_APPEND);
+        } else if (strpos($result[$i]["filename"], ".jpg") !== false){
+            $files = str_replace(".jpg", "", $result[$i]["filename"]);
+            print '<a href="'.'../handoutmathfiles/'.$date.'/'.$files.'.php">'.$files.'</a><br><br>';
+            if (!file_exists("../handoutmathfiles/".$date.'/'.$files.".php")) {
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","<?php $"."data = file_"."get_contents(\"../../handoutmath/".$date."/".$files.".jpg\");".PHP_EOL);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","header('Content-type: image/jpeg');".PHP_EOL,FILE_APPEND);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","echo $"."data; ?>",FILE_APPEND);
+            }
+        } else if (strpos($result[$i]["filename"], ".jpeg") !== false){
+            $files = str_replace(".jpeg", "", $result[$i]["filename"]);
+            print '<a href="'.'../handoutmathfiles/'.$date.'/'.$files.'.php">'.$files.'</a><br><br>';
+            if (!file_exists("../handoutmathfiles/".$date.'/'.$files.".php")) {
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","<?php $"."data = file_"."get_contents(\"../../handoutmath/".$date."/".$files.".jpeg\");".PHP_EOL);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","header('Content-type: image/jpeg');".PHP_EOL,FILE_APPEND);
+                file_put_contents("../handoutmathfiles/".$date.'/'.$files.".php","echo $"."data; ?>",FILE_APPEND);
             }
         }
     }

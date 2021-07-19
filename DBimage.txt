@@ -1,0 +1,6 @@
+imageid   auto-increment  1
+subject                   math
+date                      2021_07_13                  
+filename                  aiueo.png
+classid                   aaaaaaaa
+studentid                 0

@@ -6,6 +6,7 @@ $dsn = "mysql:host=localhost; dbname=userlist; charset=utf8";
 $dbuser = "hoge";
 $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
+$subject = "math";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -14,11 +15,12 @@ try {
     $dbh = new PDO($dsn, $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $stmt = $dbh->prepare('SELECT date FROM images WHERE classid = :classid');
+    $stmt = $dbh->prepare('SELECT DISTINCT date FROM images WHERE classid = :classid AND subject = :subject');
     $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+    $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
     $stmt->execute();
     
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
     $errorMessage = 'データベースエラー';
     $errorMessageEnglish = "Database Error";
@@ -38,19 +40,18 @@ try {
 
 <body>
 <?php include './header.php' ?>
-
 <div class="center">
-    <h1>数学-プリントを確認する<span>give mathematics-handout</span></h1>
+    <h1>数学-プリントを確認する<span>confirm mathematics-handout</span></h1>
     <?php
-    foreach ($result as $dates) {
-        print '<a href="class_'.$classid.'/handoutmathdates/'.$dates.'.php">'.$dates.'</a><br><br>';
+    for($i = 0; $i < count($result); $i++) {
+        print '<a href="class_'.$classid.'/handoutmathdates/'.$result[$i]["date"].'.php">'.$result[$i]["date"].'</a><br><br>';
         
         if(!file_exists("class_".$classid."/handoutmathdates")){
             mkdir("class_".$classid."/handoutmathdates");
         }
-        if(!file_exists("class_".$classid."/handoutmathdates/".$dates.".php")){
-            file_put_contents("class_".$classid."/handoutmathdates/".$dates.".php","<?php $"."date = \"".$dates."\"; ?>".PHP_EOL);
-            file_put_contents("class_".$classid."/handoutmathdates/".$dates.".php","<?php include '../../dates.php' ?>",FILE_APPEND);
+        if(!file_exists("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php")){
+            file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php $"."date = \"".$result[$i]["date"]."\"; ?>".PHP_EOL);
+            file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php include '../../dates.php' ?>",FILE_APPEND);
         }
     }
     ?>
