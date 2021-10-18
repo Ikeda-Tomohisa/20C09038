@@ -1,4 +1,4 @@
-<!-- page homework math teacher -->
+<!-- page homework math student -->
 
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>
@@ -16,9 +16,9 @@
 <div class="center">
 <h1>数学-宿題<span>mathematics-homework</span></h1>
 
-<a href="./pagegivehowomath.php">宿題を出す</a><br><br>
-<a href="./pagehowomathconfirmteacher.php">出した宿題を確認する</a><br><br>
-<a href="./pagehowomathconfirm.php">生徒の宿題を確認する</a><br><br>
+<a href="./pagegethowomath.php">宿題をもらう</a><br><br>
+<a href="./pagesubmithowomath.php">宿題を提出</a><br><br>
+<a href="./pagehowomathconfirmstudent.php">自分の宿題を確認する</a><br><br>
 <button class="registration" onclick="location.href='./pagesubjectmath.php'">戻る<br>Back to previous page</button><br>
 
 </div>

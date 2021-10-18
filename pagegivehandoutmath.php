@@ -8,6 +8,7 @@ $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $studentid = $_SESSION["studentID"];
 $subject = "math";
+$imagetype = "print";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -56,8 +57,9 @@ if(isset($_POST["givehandout"])) {
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             
-            $stmt = $dbh->prepare("SELECT filename FROM images WHERE subject = :subject AND date = :date AND filename = :filename LIMIT 1");
+            $stmt = $dbh->prepare("SELECT filename FROM images WHERE subject = :subject AND imagetype = :imagetype AND date = :date AND filename = :filename LIMIT 1");
             $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
+            $stmt->bindValue(':imagetype', $imagetype, PDO::PARAM_STR);
             $stmt->bindValue(':date', $date, PDO::PARAM_STR);
             $stmt->bindValue(':filename', $filename, PDO::PARAM_STR);
             $stmt->execute();
@@ -65,14 +67,14 @@ if(isset($_POST["givehandout"])) {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result  == 0) {
                 
-                $stmt3 = $dbh->prepare("INSERT INTO images(filename, date, classid, studentid, subject) VALUES (:filename, :date, :classid, :studentid, :subject)");
-                $stmt3->bindValue(':filename', $filename, PDO::PARAM_STR);
+                $stmt3 = $dbh->prepare("INSERT INTO images(subject, imagetype, date, filename, classid, studentid) VALUES (:subject, :imagetype, :date, :filename, :classid, :studentid)");
+                $stmt3->bindValue(':subject', $subject, PDO::PARAM_STR);
+                $stmt3->bindValue(':imagetype', $imagetype, PDO::PARAM_STR);
                 $stmt3->bindValue(':date', $date, PDO::PARAM_STR);
+                $stmt3->bindValue(':filename', $filename, PDO::PARAM_STR);
                 $stmt3->bindValue(':classid', $classid, PDO::PARAM_STR);
                 $stmt3->bindValue(':studentid', $studentid, PDO::PARAM_INT);
-                $stmt3->bindValue(':subject', $subject, PDO::PARAM_STR);
                 $stmt3->execute();
-                
             }
             if(move_uploaded_file($tmpfilename, $save)){
                 $fileuploadMessage = "アップロード成功！";

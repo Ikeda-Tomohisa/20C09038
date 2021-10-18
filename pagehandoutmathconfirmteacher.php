@@ -7,6 +7,7 @@ $dbuser = "hoge";
 $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $subject = "math";
+$imagetype = "print";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -15,9 +16,11 @@ try {
     $dbh = new PDO($dsn, $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $stmt = $dbh->prepare('SELECT DISTINCT date FROM images WHERE classid = :classid AND subject = :subject');
-    $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+    $stmt = $dbh->prepare('SELECT DISTINCT date FROM images WHERE subject = :subject AND imagetype = :imagetype AND classid = :classid');
     $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
+    $stmt->bindValue(':imagetype', $imagetype, PDO::PARAM_STR);
+    $stmt->bindValue(':classid', $classid, PDO::PARAM_STR);
+    
     $stmt->execute();
     
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -51,7 +54,8 @@ try {
         }
         if(!file_exists("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php")){
             file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php $"."date = \"".$result[$i]["date"]."\"; ?>".PHP_EOL);
-            file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php include '../../dates.php' ?>",FILE_APPEND);
+            file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php $"."imagetype = \"".$imagetype."\"; ?>".PHP_EOL, FILE_APPEND);
+            file_put_contents("class_".$classid."/handoutmathdates/".$result[$i]["date"].".php","<?php include '../../dates.php' ?>", FILE_APPEND);
         }
     }
     ?>

@@ -1,3 +1,3 @@
 <?php $studentid = 11; ?>
-<?php $imagetype = "print"; ?>
+<?php $imagetype = "homework"; ?>
 <?php include '../../mathstudentid.php' ?>

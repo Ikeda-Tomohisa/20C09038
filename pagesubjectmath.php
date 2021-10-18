@@ -24,7 +24,7 @@ session_start();
 <a href="./pagehowomathteacher.php">宿題（先生用）</a><br><br>
 <a href="./pagehandoutmathteacher.php">プリント（先生用）</a><br><br>
 <?php elseif($_SESSION["userTYPE"] == "s") : ?>
-宿題（生徒用）<br><br>
+<a href="./pagehowomathstudent.php">宿題（生徒用）</a><br><br>
 <a href="./pagehandoutmathstudent.php">プリント（生徒用）</a><br><br>
 <?php endif; ?>
 <button class="registration" onclick="location.href='./pagesubjectchoice.php'">戻る<br>Back to previous page</button><br>

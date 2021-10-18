@@ -1,4 +1,4 @@
-<!-- page handout math confirm-->
+<!-- page homework math confirm-->
 <?php
 session_start();
 
@@ -8,7 +8,7 @@ $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $studentid = 0;
 $subject = "math";
-$imagetype = "print";
+$imagetype = "homework";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -48,15 +48,15 @@ try {
     <h1>数学-生徒のプリントを確認する<span>confirm student's mathematics-handout</span></h1>
     <?php
     for($i = 0; $i < count($result); $i++) {
-        print '<a href="class_'.$classid.'/handoutmathstudentid/'.$result[$i]["studentid"].'.php">'.$result[$i]["studentid"].'</a><br><br>';
+        print '<a href="class_'.$classid.'/howomathstudentid/'.$result[$i]["studentid"].'.php">'.$result[$i]["studentid"].'</a><br><br>';
         
-        if(!file_exists("class_".$classid."/handoutmathstudentid")){
-            mkdir("class_".$classid."/handoutmathstudentid");
+        if(!file_exists("class_".$classid."/howomathstudentid")){
+            mkdir("class_".$classid."/howomathstudentid");
         }
-        if(!file_exists("class_".$classid."/handoutmathstudentid/".$result[$i]["studentid"].".php")){
-            file_put_contents("class_".$classid."/handoutmathstudentid/".$result[$i]["studentid"].".php","<?php $"."studentid = ".$result[$i]["studentid"]."; ?>".PHP_EOL);
-            file_put_contents("class_".$classid."/handoutmathstudentid/".$result[$i]["studentid"].".php","<?php $"."imagetype = \"".$imagetype."\"; ?>".PHP_EOL, FILE_APPEND);
-            file_put_contents("class_".$classid."/handoutmathstudentid/".$result[$i]["studentid"].".php","<?php include '../../mathstudentid.php' ?>", FILE_APPEND);
+        if(!file_exists("class_".$classid."/howomathstudentid/".$result[$i]["studentid"].".php")){
+            file_put_contents("class_".$classid."/howomathstudentid/".$result[$i]["studentid"].".php","<?php $"."studentid = ".$result[$i]["studentid"]."; ?>".PHP_EOL);
+            file_put_contents("class_".$classid."/howomathstudentid/".$result[$i]["studentid"].".php","<?php $"."imagetype = \"".$imagetype."\"; ?>".PHP_EOL, FILE_APPEND);
+            file_put_contents("class_".$classid."/howomathstudentid/".$result[$i]["studentid"].".php","<?php include '../../mathstudentid.php' ?>", FILE_APPEND);
         }
     }
     ?>

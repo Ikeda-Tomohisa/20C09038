@@ -1,4 +1,4 @@
-<!-- page give handout math-->
+<!-- page give homework math-->
 <?php
 session_start();
 
@@ -8,14 +8,14 @@ $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $studentid = $_SESSION["studentID"];
 $subject = "math";
-$imagetype = "print";
+$imagetype = "homework";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
 $fileuploadMessage = "";
 $fileuploadMessageEnglish = "";
 
-if(isset($_POST["givehandout"])) {
+if(isset($_POST["submithomework"])) {
     $errorMessage = "";
     $errorMessageEnglish = "";
     //print_r($_FILES);
@@ -38,7 +38,7 @@ if(isset($_POST["givehandout"])) {
         
         date_default_timezone_set('Asia/Tokyo');
         $directory_path = "class_".$classid;
-        $directory_path2 = $directory_path."/handoutmath_student";
+        $directory_path2 = $directory_path."/howomath_student";
         $directory_path3 = $directory_path2."/".$studentid;
         $directory_path4 = $directory_path3."/".$date;
         
@@ -96,7 +96,7 @@ if(isset($_POST["givehandout"])) {
         $dbh = null;
     }
 } else if (isset($_POST["back"])) {
-    header("Location: ./pagehandoutmathstudent.php");
+    header("Location: ./pagehowomathstudent.php");
     exit();
 }
 
@@ -108,7 +108,7 @@ if(isset($_POST["givehandout"])) {
 
 <head>
 <meta charset="utf-8">
-<title>myapp-数学-プリントを提出</title>
+<title>myapp-数学-宿題を提出</title>
 <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -116,7 +116,7 @@ if(isset($_POST["givehandout"])) {
 <?php include './header.php' ?>
 
 <div class="center">
-    <h1>数学-プリントを提出<span>submit mathematics-handout</span></h1>
+    <h1>数学-宿題を提出<span>submit mathematics-homework</span></h1>
     <div class="red">
     同じ日に同じ名前のファイルを提出した場合は上書きされます。<br>
     If you submit the same file name on the same day,it will be overwritten.
@@ -129,7 +129,7 @@ if(isset($_POST["givehandout"])) {
     <form action="" method="POST" enctype="multipart/form-data">
         <input type="file" name="image"><br><br>
         
-        <button type="submit" class="registration" name="givehandout">ファイルに送信する<br>Send this file</button><br><br>
+        <button type="submit" class="registration" name="submithomework">ファイルに送信する<br>Send this file</button><br><br>
         <button class="registration" name="back">戻る<br>Back to previous page</button><br>
     </form>
 </div>

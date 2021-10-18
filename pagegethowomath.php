@@ -7,7 +7,7 @@ $dbuser = "hoge";
 $dbpass = "hogehoge";
 $classid = $_SESSION["classID"];
 $subject = "math";
-$imagetype = "print";
+$imagetype = "homework";
 
 $errorMessage = "";
 $errorMessageEnglish = "";
@@ -36,25 +36,25 @@ try {
 
 <head>
 <meta charset="utf-8">
-<title>myapp-数学-プリントをもらう</title>
+<title>myapp-数学-宿題をもらう</title>
 <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 <?php include './header.php' ?>
 <div class="center">
-    <h1>数学-プリントをもらう<span>get mathematics-handout</span></h1>
+    <h1>数学-宿題をもらう<span>get mathematics-homework</span></h1>
     <?php
     for($i = 0; $i < count($result); $i++) {
-        print '<a href="class_'.$classid.'/handoutmathdates_student/'.$result[$i]["date"].'get.php">'.$result[$i]["date"].'</a><br><br>';
+        print '<a href="class_'.$classid.'/howomathdates_student/'.$result[$i]["date"].'get.php">'.$result[$i]["date"].'</a><br><br>';
         
-        if(!file_exists("class_".$classid."/handoutmathdates_student")){
-            mkdir("class_".$classid."/handoutmathdates_student");
+        if(!file_exists("class_".$classid."/howomathdates_student")){
+            mkdir("class_".$classid."/howomathdates_student");
         }
-        if(!file_exists("class_".$classid."/handoutmathdates_student/".$result[$i]["date"]."get.php")){
-            file_put_contents("class_".$classid."/handoutmathdates_student/".$result[$i]["date"]."get.php","<?php $"."date = \"".$result[$i]["date"]."\"; ?>".PHP_EOL);
-            file_put_contents("class_".$classid."/handoutmathdates_student/".$result[$i]["date"]."get.php","<?php $"."imagetype = \"".$imagetype."\"; ?>".PHP_EOL, FILE_APPEND);
-            file_put_contents("class_".$classid."/handoutmathdates_student/".$result[$i]["date"]."get.php","<?php include '../../get.php' ?>", FILE_APPEND);
+        if(!file_exists("class_".$classid."/howomathdates_student/".$result[$i]["date"]."get.php")){
+            file_put_contents("class_".$classid."/howomathdates_student/".$result[$i]["date"]."get.php","<?php $"."date = \"".$result[$i]["date"]."\"; ?>".PHP_EOL);
+            file_put_contents("class_".$classid."/howomathdates_student/".$result[$i]["date"]."get.php","<?php $"."imagetype = \"".$imagetype."\"; ?>".PHP_EOL, FILE_APPEND);
+            file_put_contents("class_".$classid."/howomathdates_student/".$result[$i]["date"]."get.php","<?php include '../../get.php' ?>", FILE_APPEND);
         }
         
     }
