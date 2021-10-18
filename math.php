@@ -11,9 +11,25 @@
 <link rel="stylesheet" href="./css/stylemaincontents.css">
 </head>
 
+<?php
+$imgs = [];
+$dir = "./textbook_math/";
+$handle = opendir($dir);
+
+while(false !== ($filename = readdir($handle))) {
+    if(is_file($dir . $filename)) {
+        $imgs[] = $filename;
+    }
+}
+closedir($handle);
+$json_array = json_encode($imgs);
+?>
+<script>
+let imgs = <?php echo $json_array; ?>
+</script>
 <script src="./js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="./js/notedrawing.js"></script>
-<script type="text/javascript" src="./js/textbookpagechange.js"></script>
+<script type="text/javascript" src="./js/mathtextbookpagechange.js"></script>
 
 <body>
 <?php include './header.php' ?>
