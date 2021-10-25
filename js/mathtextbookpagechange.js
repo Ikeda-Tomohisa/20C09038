@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   let index = 0;
-  $("#textbook").children("img").attr("src", "./textbook_math/"+imgs[index]);
+  $("#textbook").children("img").attr("src", "./class_"+classid+"/textbook_math/"+imgs[index]);
   $("#pagenumber").text((index+1)+"ページ");
   
   $("#nextpage").click(function(){
@@ -10,7 +10,7 @@ $(document).ready(function(){
     }else{
       index++;
     }
-    $("#textbook").children("img").attr("src", "./textbook_math/"+imgs[index]);
+    $("#textbook").children("img").attr("src", "./class_"+classid+"/textbook_math/"+imgs[index]);
     $("#pagenumber").text((index+1)+"ページ");
   });
   
@@ -20,19 +20,19 @@ $(document).ready(function(){
     }else{
       index--;
     }
-    $("#textbook").children("img").attr("src", "./textbook_math/"+imgs[index]);
+    $("#textbook").children("img").attr("src", "./class_"+classid+"/textbook_math/"+imgs[index]);
     $("#pagenumber").text((index+1)+"ページ");
   });
   
   $("#firstpage").click(function(){
     index = 0;
-    $("#textbook").children("img").attr("src", "./textbook_math/"+imgs[index]);
+    $("#textbook").children("img").attr("src", "./class_"+classid+"/textbook_math/"+imgs[index]);
     $("#pagenumber").text((index+1)+"ページ");
   });
   
   $("#lastpage").click(function(){
     index = imgs.length - 1;
-    $("#textbook").children("img").attr("src", "./textbook_math/"+imgs[index]);
+    $("#textbook").children("img").attr("src", "./class_"+classid+"/textbook_math/"+imgs[index]);
     $("#pagenumber").text((index+1)+"ページ");
   });
   

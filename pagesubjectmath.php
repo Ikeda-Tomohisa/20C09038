@@ -19,11 +19,13 @@ session_start();
 <div class="center">
 <h1>数学<span>mathematics</span></h1>
 
-<a href="./math.php">教科書とノート</a><br><br>
+
 <?php if($_SESSION["userTYPE"] == "t") : ?> 
+<a href="./pagetextbookandnotemathteacher.php">教科書とノート</a><br><br>
 <a href="./pagehowomathteacher.php">宿題（先生用）</a><br><br>
 <a href="./pagehandoutmathteacher.php">プリント（先生用）</a><br><br>
 <?php elseif($_SESSION["userTYPE"] == "s") : ?>
+<a href="./math.php">教科書とノート</a><br><br>
 <a href="./pagehowomathstudent.php">宿題（生徒用）</a><br><br>
 <a href="./pagehandoutmathstudent.php">プリント（生徒用）</a><br><br>
 <?php endif; ?>

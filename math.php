@@ -1,5 +1,10 @@
 <!-- math -->
 
+<?php
+session_start();
+$classid = $_SESSION["classID"];
+?>
+
 <?php include './globalcommon.php' ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,9 +18,8 @@
 
 <?php
 $imgs = [];
-$dir = "./textbook_math/";
+$dir = "./class_".$classid."/textbook_math/";
 $handle = opendir($dir);
-
 while(false !== ($filename = readdir($handle))) {
     if(is_file($dir . $filename)) {
         $imgs[] = $filename;
@@ -24,8 +28,11 @@ while(false !== ($filename = readdir($handle))) {
 closedir($handle);
 $json_array = json_encode($imgs);
 ?>
-<script>
-let imgs = <?php echo $json_array; ?>
+<script type="text/javascript">
+let imgs = <?php echo $json_array; ?>;
+var classid = "<?php echo $classid ?>";
+console.log(imgs);
+console.log(classid);
 </script>
 <script src="./js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="./js/notedrawing.js"></script>
