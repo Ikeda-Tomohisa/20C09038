@@ -131,5 +131,41 @@ document.getElementById("lineNum").innerHTML = lineNum;
 
 //色を選択
 $('li').click(function() {
-    context.strokeStyle = $(this).css('background-color');
+	context = canvas.getContext("2d");
+	context.strokeStyle = $(this).css('background-color');
+});
+
+//消去ボタンを起動する
+$('#clear').click(function(event) {
+	if(!confirm('本当に消去しますか？')) return;
+	event.preventDefault();
+	context.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+$('#save').click(function() {
+	c = document.getElementById("canvas");
+	//a = document.createElement('a');
+	//a.href = c.toDataURL('image/png');
+	//a.download = 'note.png';
+	//a.click();
+	
+	var data = c.toDataURL('image/png');
+	//data = data.replace('data:image/png;base64,','');
+	//console.log(data);
+	$.ajax({
+		type: "POST",
+		url: "save.php",
+		contentType: false,
+		processData: false,
+		data: { "data" : data },
+		//dataType:'json',
+		//scriptCharset: 'utf-8',
+		success:function(data){
+			alert(data);
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			alert("ng");
+			alert('Error : ' + errorThrown);
+		}
+	});
 });

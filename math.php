@@ -28,14 +28,14 @@ while(false !== ($filename = readdir($handle))) {
 closedir($handle);
 $json_array = json_encode($imgs);
 ?>
+
 <script type="text/javascript">
 let imgs = <?php echo $json_array; ?>;
 var classid = "<?php echo $classid ?>";
 //console.log(imgs);
 //console.log(classid);
 </script>
-<script src="./js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="./js/mathtextbookpagechange.js"></script>
+
 
 <body>
 <?php include './header.php' ?>
@@ -59,8 +59,10 @@ var classid = "<?php echo $classid ?>";
              <canvas id="canvas"></canvas>
         </div>
         <div id="center">
-            <input type="button" id="undo" name="undo" value="undo">
-            <input type="button" id="redo" name="redo" value="redo">
+            <input type="button" id="undo" name="undo" value="一つ前へ">
+            <input type="button" id="redo" name="redo" value="一つ後へ">
+            <input type="button" id="clear" name="clear" value="消去">
+            <input type="button" id="save" name="save" value="保存">
             <p>線の太さ<input type="range" min="1" max="15" value="3" id="lineWidth"><span id="lineNum">3</span></p>
             <div id="cursor">
             <ul>
@@ -93,6 +95,8 @@ var classid = "<?php echo $classid ?>";
         </div>
     </div>
 </div>
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/mathtextbookpagechange.js"></script>
 <script type="text/javascript" src="./js/notedrawing.js"></script>
 </body>
 </html>
