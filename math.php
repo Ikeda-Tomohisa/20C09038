@@ -3,6 +3,7 @@
 <?php
 session_start();
 $classid = $_SESSION["classID"];
+$_SESSION["subject"] = "math";
 ?>
 
 <?php include './globalcommon.php' ?>
@@ -22,10 +23,18 @@ $dir = "./class_".$classid."/textbook_math/";
 $handle = opendir($dir);
 while(false !== ($filename = readdir($handle))) {
     if(is_file($dir . $filename)) {
+        $filename_no = str_replace("tbmath_","",$filename);
+        $filename_no = str_replace("tbmath","0",$filename_no);
+        $filename_no = str_replace(".png","",$filename_no);
         $imgs[] = $filename;
+        $imgs_no[] = $filename_no;
     }
 }
+
 closedir($handle);
+array_multisort($imgs_no, $imgs);
+//var_dump($imgs_no);
+//var_dump($imgs);
 $json_array = json_encode($imgs);
 ?>
 

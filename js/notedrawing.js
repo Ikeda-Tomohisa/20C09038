@@ -149,23 +149,25 @@ $('#save').click(function() {
 	//a.download = 'note.png';
 	//a.click();
 	
-	var data = c.toDataURL('image/png');
-	//data = data.replace('data:image/png;base64,','');
-	//console.log(data);
+	var imagedata = c.toDataURL('image/png');
+	//console.log(imagedata);
 	$.ajax({
-		type: "POST",
-		url: "save.php",
-		contentType: false,
-		processData: false,
-		data: { "data" : data },
-		//dataType:'json',
-		//scriptCharset: 'utf-8',
+		type: 'POST',
+		url: 'save.php',
+		//contentType: false,
+		//processData: false,
+		data: {"imagedata":imagedata},
+		dataType:'text',
+		scriptCharset: 'utf-8',
 		success:function(data){
-			alert(data);
+			alert("保存しました。saved.");
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 			alert("ng");
 			alert('Error : ' + errorThrown);
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);
 		}
 	});
 });

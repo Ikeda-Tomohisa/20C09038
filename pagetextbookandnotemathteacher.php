@@ -20,6 +20,7 @@ session_start();
 <h1>数学-教科書とノート<span>mathematics-textbook and note</span></h1>
 
 <a href="./math.php">教科書とノートを表示</a><br><br>
+<a href="./pagenotemathteacher.php">ノートの一覧</a><br><br>
 <a href="./pageaddtextbookmath.php">数学の教科書を追加</a><br><br>
 
 <button class="registration" onclick="location.href='./pagesubjectmath.php'">戻る<br>Back to previous page</button><br>
